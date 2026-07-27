@@ -27,7 +27,9 @@ const buildShowtimes = (days) =>
     }),
   )
 
-export const movies = [
+const STORAGE_KEY = 'cosmos_movies_v1'
+
+const defaultMovies = [
   {
     id: 'karuppu',
     title: 'Karuppu',
@@ -204,6 +206,28 @@ export const movies = [
     showtimes: [],
   },
 ]
+
+function loadMovies() {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY)
+    if (raw) return JSON.parse(raw)
+  } catch {
+    // ignore corrupt storage and fall back to defaults
+  }
+  return defaultMovies
+}
+
+export const movies = loadMovies()
+
+export const saveMovies = (list) => {
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list))
+}
+
+export const resetMovies = () => {
+  window.localStorage.removeItem(STORAGE_KEY)
+}
+
+export const youtubePoster = youtubeThumb
 
 export const getMovieById = (id) => movies.find((m) => m.id === id)
 

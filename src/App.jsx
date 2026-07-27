@@ -13,6 +13,8 @@ import Branches from './pages/Branches.jsx'
 import BranchDetail from './pages/BranchDetail.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
+import AdminLogin from './pages/AdminLogin.jsx'
+import Admin from './pages/Admin.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 function PageTransition({ children }) {
@@ -54,6 +56,8 @@ function App() {
               <Route path="/branches/:branchId" element={<PageTransition><BranchDetail /></PageTransition>} />
               <Route path="/about" element={<PageTransition><About /></PageTransition>} />
               <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+              <Route path="/admin/login" element={<PageTransition><AdminLogin /></PageTransition>} />
+              <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
               <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
             </Routes>
           </AnimatePresence>
