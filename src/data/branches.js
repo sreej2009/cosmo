@@ -48,10 +48,10 @@ export const branches = [
     ],
   },
   {
-    id: 'kolakalur',
-    name: 'Kolakalur',
+    id: 'kolappalur',
+    name: 'Kolappalur',
     badge: 'Riverside',
-    address: 'Kolakalur Main Road, Perundurai - 638057',
+    address: 'Kolappalur Main Road, Perundurai - 638057',
     tagline: 'Easygoing screens off the highway.',
     screens: [
       { name: 'Screen 1', type: 'Standard' },
