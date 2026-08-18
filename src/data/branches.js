@@ -1,10 +1,10 @@
 export const branches = [
   {
-    id: 'starview',
-    name: 'Starview District',
+    id: 'peelamedu',
+    name: 'Peelamedu',
     badge: 'Flagship',
-    address: '42 Orbit Avenue, Starview District',
-    tagline: 'The original Cosmos flagship, built for premieres.',
+    address: 'Avinashi Road, Peelamedu, Coimbatore - 641004',
+    tagline: 'Our flagship screen in the heart of Coimbatore.',
     screens: [
       { name: 'Screen 1', type: 'IMAX' },
       { name: 'Screen 2', type: 'Dolby Atmos' },
@@ -12,10 +12,22 @@ export const branches = [
     ],
   },
   {
-    id: 'comet-heights',
-    name: 'Comet Heights',
+    id: 'avinashi',
+    name: 'Avinashi',
+    badge: 'Popular',
+    address: 'Tiruppur Road, Avinashi - 641654',
+    tagline: 'A favourite weekend spot for the Avinashi crowd.',
+    screens: [
+      { name: 'Screen 1', type: 'Dolby Atmos' },
+      { name: 'Screen 2', type: 'Recliner' },
+      { name: 'Screen 3', type: 'Standard' },
+    ],
+  },
+  {
+    id: 'perunthurai',
+    name: 'Perunthurai',
     badge: 'Newest',
-    address: '17 Comet Heights Boulevard, Uptown',
+    address: 'Erode Main Road, Perunthurai - 638052',
     tagline: 'Our newest screens, with 4DX motion seating.',
     screens: [
       { name: 'Screen 1', type: 'IMAX' },
@@ -24,13 +36,37 @@ export const branches = [
     ],
   },
   {
-    id: 'lunar-quarter',
-    name: 'Lunar Quarter',
-    badge: 'Riverside',
-    address: '9 Lunar Quarter Walk, Riverside',
-    tagline: 'A cozy neighbourhood cinema by the water.',
+    id: 'narasimmanayakampalayam',
+    name: 'Narasimmanayakampalayam',
+    badge: 'Neighbourhood',
+    address: 'Sulur Road, Narasimmanayakampalayam, Coimbatore - 641659',
+    tagline: 'A cozy neighbourhood cinema close to home.',
     screens: [
       { name: 'Screen 1', type: 'Dolby Atmos' },
+      { name: 'Screen 2', type: 'Standard' },
+      { name: 'Screen 3', type: 'Recliner' },
+    ],
+  },
+  {
+    id: 'kolakalur',
+    name: 'Kolakalur',
+    badge: 'Riverside',
+    address: 'Kolakalur Main Road, Perundurai - 638057',
+    tagline: 'Easygoing screens off the highway.',
+    screens: [
+      { name: 'Screen 1', type: 'Standard' },
+      { name: 'Screen 2', type: 'Recliner' },
+      { name: 'Screen 3', type: 'Dolby Atmos' },
+    ],
+  },
+  {
+    id: 'siruvalur',
+    name: 'Siruvalur',
+    badge: 'Family',
+    address: 'Siruvalur, Erode District - 638107',
+    tagline: 'Family-friendly shows and snack-side seating.',
+    screens: [
+      { name: 'Screen 1', type: 'IMAX' },
       { name: 'Screen 2', type: 'Standard' },
       { name: 'Screen 3', type: 'Recliner' },
     ],

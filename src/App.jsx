@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar.jsx'
 import MobileNav from './components/MobileNav.jsx'
 import Footer from './components/Footer.jsx'
 import SplashScreen from './components/SplashScreen.jsx'
+import BranchGate from './components/BranchGate.jsx'
 import Home from './pages/Home.jsx'
 import Movies from './pages/Movies.jsx'
 import MovieDetail from './pages/MovieDetail.jsx'
@@ -33,6 +34,7 @@ function PageTransition({ children }) {
 function App() {
   const location = useLocation()
   const [showSplash, setShowSplash] = useState(true)
+  const [showBranchGate, setShowBranchGate] = useState(true)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -42,6 +44,9 @@ function App() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
       <AnimatePresence>
         {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {!showSplash && showBranchGate && <BranchGate onDone={() => setShowBranchGate(false)} />}
       </AnimatePresence>
       <Sidebar />
       <div className="flex flex-1 flex-col md:pl-36">

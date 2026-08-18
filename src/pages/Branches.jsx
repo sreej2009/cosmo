@@ -14,9 +14,12 @@ const screenIcons = {
 }
 
 const mapPins = [
-  { x: 14, y: 26 },
-  { x: 50, y: 50 },
-  { x: 86, y: 24 },
+  { x: 10, y: 22 },
+  { x: 28, y: 48 },
+  { x: 46, y: 20 },
+  { x: 64, y: 46 },
+  { x: 82, y: 18 },
+  { x: 96, y: 44 },
 ]
 
 export default function Branches() {
@@ -66,7 +69,7 @@ export default function Branches() {
           </defs>
           <motion.path
             id="branch-route"
-            d={`M${mapPins[0].x},${mapPins[0].y} Q32,10 ${mapPins[1].x},${mapPins[1].y} Q68,66 ${mapPins[2].x},${mapPins[2].y}`}
+            d={`M${mapPins[0].x},${mapPins[0].y} Q19,10 ${mapPins[1].x},${mapPins[1].y} Q37,66 ${mapPins[2].x},${mapPins[2].y} Q55,6 ${mapPins[3].x},${mapPins[3].y} Q73,64 ${mapPins[4].x},${mapPins[4].y} Q89,8 ${mapPins[5].x},${mapPins[5].y}`}
             fill="none"
             stroke="#f0c14b"
             strokeWidth="0.4"
@@ -143,7 +146,7 @@ export default function Branches() {
               Find Your Nearest <span className="text-accent-light">Cosmos</span>
             </h2>
             <p className="max-w-xl text-base leading-relaxed text-muted-foreground">
-              Three screens-first locations across the city, each with its own line-up and showtimes.
+              Six screens-first locations across Coimbatore and Erode district, each with its own line-up and showtimes.
             </p>
           </motion.div>
         </div>

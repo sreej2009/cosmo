@@ -8,8 +8,8 @@ import StarfieldBackground from '../components/StarfieldBackground.jsx'
 const initialForm = { name: '', email: '', message: '' }
 
 const contactInfo = [
-  { icon: MapPin, label: 'Address', value: '42 Orbit Avenue, Starview District' },
-  { icon: Phone, label: 'Phone', value: '+1 (555) 019-2842' },
+  { icon: MapPin, label: 'Address', value: 'Avinashi Road, Peelamedu, Coimbatore - 641004' },
+  { icon: Phone, label: 'Phone', value: '+91 98765 43210' },
   { icon: Mail, label: 'Email', value: 'hello@cosmoscinemas.example' },
 ]
 
@@ -52,7 +52,7 @@ export default function Contact() {
         </ul>
 
         <a
-          href="https://www.openstreetmap.org/?mlat=40.72&mlon=-73.98#map=13/40.72/-73.98"
+          href="https://www.openstreetmap.org/?mlat=11.0296&mlon=77.0266#map=13/11.0296/77.0266"
           target="_blank"
           rel="noreferrer"
           className="group relative overflow-hidden rounded-2xl border border-border/30 h-52"
@@ -64,8 +64,8 @@ export default function Contact() {
               <MapPin size={20} aria-hidden="true" />
             </span>
             <div>
-              <p className="text-sm font-semibold text-foreground">Starview District</p>
-              <p className="text-xs text-muted-foreground">42 Orbit Avenue</p>
+              <p className="text-sm font-semibold text-foreground">Peelamedu</p>
+              <p className="text-xs text-muted-foreground">Avinashi Road, Coimbatore</p>
             </div>
             <span className="flex items-center gap-1.5 text-xs font-medium text-accent-light">
               <Navigation size={12} aria-hidden="true" /> Get Directions

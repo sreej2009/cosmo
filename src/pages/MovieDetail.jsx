@@ -159,7 +159,7 @@ export default function MovieDetail() {
               </div>
 
               <Button variant="primary" disabled={!selectedShowtime} onClick={goToBooking}>
-                Select Seats <ArrowRight size={16} aria-hidden="true" />
+                Select Seats <ArrowRight size={16} ari0-hidden="true" />
               </Button>
             </>
           )}

@@ -104,11 +104,11 @@ export default function Footer() {
           </h3>
           <p className="flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
-            42 Orbit Avenue, Starview District
+            Avinashi Road, Peelamedu, Coimbatore
           </p>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
             <Phone size={16} className="shrink-0" aria-hidden="true" />
-            +1 (555) 019-2842
+            +91 98765 43210
           </p>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
             <Mail size={16} className="shrink-0" aria-hidden="true" />
