@@ -142,7 +142,7 @@ function Hero() {
                     aria-pressed={i === activeIndex}
                     className={`group relative shrink-0 w-32 origin-bottom overflow-hidden rounded-xl transition-all duration-300 ease-out cursor-pointer sm:w-40 ${
                       i === activeIndex
-                        ? 'scale-110 ring-[3px] ring-pink-500 opacity-100 shadow-[0_10px_30px_-6px_rgba(236,72,153,0.6)] z-10'
+                        ? 'scale-110 ring-[3px] ring-accent-strong opacity-100 shadow-[0_10px_30px_-6px_rgba(214,169,40,0.55)] z-10'
                         : 'ring-1 ring-border/40 opacity-70 hover:scale-105 hover:opacity-100 hover:z-10'
                     }`}
                   >
@@ -255,7 +255,7 @@ export default function Home() {
                 >
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/25 via-accent/10 to-primary text-accent-light ring-1 ring-accent/30 shadow-[0_8px_24px_-8px_rgba(204,154,46,0.5)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/25 via-accent/10 to-primary text-accent-light ring-1 ring-accent/30 shadow-[0_8px_24px_-8px_rgba(204,154,46,0.5)] transition-transform duration-300 group-hover:scale-110">
                   <Icon size={24} aria-hidden="true" />
                 </span>
                 <div className="relative flex flex-col gap-1.5">

@@ -40,7 +40,7 @@ export default function Contact() {
               key={label}
               className="flex items-start gap-3 rounded-xl border border-border/30 bg-surface p-4"
             >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-accent-light">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-accent/20 to-primary text-accent-light ring-1 ring-accent/25">
                 <Icon size={17} aria-hidden="true" />
               </span>
               <div className="flex flex-col gap-0.5">
@@ -113,7 +113,7 @@ export default function Contact() {
                   required
                   value={form.name}
                   onChange={handleChange('name')}
-                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 min-h-11 text-sm text-foreground focus:border-accent outline-none"
+                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 min-h-11 text-sm text-foreground focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/25 outline-none transition-colors"
                 />
               </div>
 
@@ -128,7 +128,7 @@ export default function Contact() {
                   autoComplete="email"
                   value={form.email}
                   onChange={handleChange('email')}
-                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 min-h-11 text-sm text-foreground focus:border-accent outline-none"
+                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 min-h-11 text-sm text-foreground focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/25 outline-none transition-colors"
                 />
               </div>
 
@@ -142,7 +142,7 @@ export default function Contact() {
                   rows={5}
                   value={form.message}
                   onChange={handleChange('message')}
-                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground focus:border-accent outline-none resize-none"
+                  className="rounded-lg border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/25 outline-none transition-colors resize-none"
                 />
               </div>
 

@@ -49,7 +49,7 @@ export default function AdminLogin() {
             }}
             placeholder="Password"
             autoFocus
-            className="rounded-full border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent"
+            className="rounded-full border border-border/50 bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20"
           />
           {error && <p className="px-1 text-xs text-destructive">{error}</p>}
         </div>

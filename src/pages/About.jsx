@@ -87,7 +87,7 @@ export default function About() {
               >
                 {String(i + 1).padStart(2, '0')}
               </span>
-              <span className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-primary text-accent-light">
+              <span className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-primary text-accent-light ring-1 ring-accent/25 transition-transform duration-300 group-hover:scale-110">
                 <Icon size={20} aria-hidden="true" />
               </span>
               <h3 className="relative text-lg font-semibold text-foreground">{title}</h3>

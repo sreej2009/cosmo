@@ -6,6 +6,67 @@ import Button from '../components/Button.jsx'
 import SeatMap from '../components/SeatMap.jsx'
 import { getMovieById } from '../data/movies.js'
 
+function BookingSummary({ movie, showtime, selectedSeats, total, onContinue, onBack }) {
+  return (
+    <div className="flex flex-col gap-5">
+      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Booking Summary</h3>
+
+      <div className="flex flex-col gap-1.5 text-sm">
+        <span className="text-muted-foreground">Movie</span>
+        <span className="font-medium text-foreground">{movie.title}</span>
+      </div>
+
+      {showtime && (
+        <div className="grid grid-cols-2 gap-3 text-sm">
+          <div>
+            <p className="text-xs text-muted-foreground">Cinema</p>
+            <p className="text-foreground">{showtime.branchName}</p>
+          </div>
+          <div>
+            <p className="text-xs text-muted-foreground">Time</p>
+            <p className="text-foreground">{showtime.time}</p>
+          </div>
+          <div className="col-span-2">
+            <p className="text-xs text-muted-foreground">Date</p>
+            <p className="text-foreground">
+              {new Date(showtime.date).toLocaleDateString(undefined, {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div className="h-px bg-border/30" />
+
+      <div className="flex flex-col gap-1.5">
+        <span className="text-xs text-muted-foreground">Selected Seats</span>
+        <span className="text-sm font-medium text-foreground">
+          {selectedSeats.length > 0 ? selectedSeats.join(', ') : 'None yet'}
+        </span>
+      </div>
+
+      <div className="h-px bg-border/30" />
+
+      <div className="flex items-center justify-between">
+        <span className="font-semibold text-foreground">Total</span>
+        <span className="text-xl font-semibold text-accent-light">₹{total}</span>
+      </div>
+
+      <div className="flex flex-col gap-2 pt-1">
+        <Button variant="primary" disabled={selectedSeats.length === 0} onClick={onContinue}>
+          Continue <ArrowRight size={16} aria-hidden="true" />
+        </Button>
+        <Button variant="secondary" onClick={onBack}>
+          <ArrowLeft size={16} aria-hidden="true" /> Back
+        </Button>
+      </div>
+    </div>
+  )
+}
+
 const steps = ['Showtime', 'Seats', 'Confirmation']
 
 export default function Booking() {
@@ -53,13 +114,13 @@ export default function Booking() {
     : movie.id
 
   return (
-    <div className="mx-auto max-w-3xl px-5 pt-16 pb-16">
-      <div className="mb-10 flex flex-col gap-2">
+    <div className="mx-auto max-w-5xl px-5 pt-16 pb-28 lg:pb-16">
+      <div className="mb-10 flex max-w-3xl flex-col gap-2">
         <span className="text-xs uppercase tracking-[0.2em] text-accent-light">Booking</span>
         <h1 className="text-3xl md:text-4xl text-foreground">{movie.title}</h1>
       </div>
 
-      <ol className="mb-10 flex items-center gap-3">
+      <ol className="mb-10 flex max-w-3xl items-center gap-3">
         {steps.map((label, i) => {
           const num = i + 1
           const isDone = step > num
@@ -94,7 +155,7 @@ export default function Booking() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="flex flex-col gap-6"
+            className="flex max-w-3xl flex-col gap-6"
           >
             <div className="flex flex-wrap gap-2">
               {dates.map((date) => {
@@ -161,38 +222,52 @@ export default function Booking() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -24 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="flex flex-col gap-8"
+            className="flex flex-col gap-10 lg:flex-row lg:items-start"
           >
-            <SeatMap
-              key={seatKey}
-              price={movie.price}
-              seedKey={seatKey}
-              onChange={(seats, amount) => {
-                setSelectedSeats(seats)
-                setTotal(amount)
-              }}
-            />
-
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border/30 bg-surface px-5 py-4">
-              <div className="text-sm text-muted-foreground">
-                {selectedSeats.length > 0 ? (
-                  <>
-                    <span className="text-foreground font-medium">{selectedSeats.join(', ')}</span> selected
-                  </>
-                ) : (
-                  'Select up to 8 seats'
-                )}
-              </div>
-              <div className="text-lg font-semibold text-accent-light">₹{total}</div>
+            <div className="min-w-0 flex-1">
+              <SeatMap
+                key={seatKey}
+                price={movie.price}
+                seedKey={seatKey}
+                onChange={(seats, amount) => {
+                  setSelectedSeats(seats)
+                  setTotal(amount)
+                }}
+              />
             </div>
 
-            <div className="flex justify-between">
-              <Button variant="secondary" onClick={() => setStep(1)}>
-                <ArrowLeft size={16} aria-hidden="true" /> Back
-              </Button>
-              <Button variant="primary" disabled={selectedSeats.length === 0} onClick={() => setStep(3)}>
-                Confirm Booking <ArrowRight size={16} aria-hidden="true" />
-              </Button>
+            <aside className="hidden w-72 shrink-0 rounded-2xl border border-border/30 bg-surface p-6 lg:sticky lg:top-24 lg:block">
+              <BookingSummary
+                movie={movie}
+                showtime={showtime}
+                selectedSeats={selectedSeats}
+                total={total}
+                onContinue={() => setStep(3)}
+                onBack={() => setStep(1)}
+              />
+            </aside>
+
+            <div className="fixed inset-x-0 bottom-16 z-40 border-t border-border/40 bg-surface/95 px-5 py-3 backdrop-blur-md lg:hidden">
+              <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
+                <div className="min-w-0 text-sm">
+                  <p className="truncate text-muted-foreground">
+                    {selectedSeats.length > 0 ? (
+                      <span className="font-medium text-foreground">{selectedSeats.join(', ')}</span>
+                    ) : (
+                      'Select up to 8 seats'
+                    )}
+                  </p>
+                  <p className="text-base font-semibold text-accent-light">₹{total}</p>
+                </div>
+                <div className="flex shrink-0 gap-2">
+                  <Button variant="secondary" onClick={() => setStep(1)} className="!px-4">
+                    <ArrowLeft size={16} aria-hidden="true" />
+                  </Button>
+                  <Button variant="primary" disabled={selectedSeats.length === 0} onClick={() => setStep(3)} className="!px-4">
+                    Continue <ArrowRight size={16} aria-hidden="true" />
+                  </Button>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}

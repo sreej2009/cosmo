@@ -103,7 +103,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               required
               value={form.title}
               onChange={update('title')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -114,7 +114,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               value={form.genres}
               onChange={update('genres')}
               placeholder="Action, Drama"
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -124,7 +124,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               value={form.cast}
               onChange={update('cast')}
               placeholder="Actor One, Actor Two"
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -135,7 +135,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               required
               value={form.durationMin}
               onChange={update('durationMin')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -148,7 +148,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               max="10"
               value={form.imdb}
               onChange={update('imdb')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -157,7 +157,7 @@ function MovieForm({ initial, onCancel, onSave }) {
             <select
               value={form.rating}
               onChange={update('rating')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             >
               <option>U</option>
               <option>UA</option>
@@ -170,7 +170,7 @@ function MovieForm({ initial, onCancel, onSave }) {
             <input
               value={form.language}
               onChange={update('language')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -180,7 +180,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               type="number"
               value={form.year}
               onChange={update('year')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -190,7 +190,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               type="number"
               value={form.price}
               onChange={update('price')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
 
@@ -199,7 +199,7 @@ function MovieForm({ initial, onCancel, onSave }) {
             <select
               value={form.status}
               onChange={update('status')}
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             >
               <option value="now-showing">Now Showing</option>
               <option value="coming-soon">Coming Soon</option>
@@ -213,7 +213,7 @@ function MovieForm({ initial, onCancel, onSave }) {
                 type="date"
                 value={form.releaseDate}
                 onChange={update('releaseDate')}
-                className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+                className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
               />
             </label>
           )}
@@ -225,7 +225,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               value={form.youtubeId}
               onChange={update('youtubeId')}
               placeholder="e.g. JpVl_-1YgIo"
-              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
             <span className="text-xs text-muted-foreground">
               The part after "v=" in the YouTube trailer URL. Poster is auto-generated from it.
@@ -238,7 +238,7 @@ function MovieForm({ initial, onCancel, onSave }) {
               rows={3}
               value={form.synopsis}
               onChange={update('synopsis')}
-              className="resize-none rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent"
+              className="resize-none rounded-lg border border-border/50 bg-background px-3 py-2 text-foreground outline-none focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 transition-colors"
             />
           </label>
         </div>
@@ -253,7 +253,7 @@ function MovieForm({ initial, onCancel, onSave }) {
           </button>
           <button
             type="submit"
-            className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background hover:bg-accent-light cursor-pointer"
+            className="rounded-full bg-accent-strong px-5 py-2.5 text-sm font-medium text-background hover:brightness-110 cursor-pointer"
           >
             {initial ? 'Save Changes' : 'Add Movie'}
           </button>
@@ -315,7 +315,7 @@ export default function Admin() {
               setEditing(null)
               setShowForm(true)
             }}
-            className="flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-background hover:bg-accent-light cursor-pointer"
+            className="flex items-center gap-2 rounded-full bg-accent-strong px-5 py-2.5 text-sm font-medium text-background hover:brightness-110 cursor-pointer"
           >
             <Plus size={16} aria-hidden="true" /> Add Movie
           </button>

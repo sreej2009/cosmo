@@ -15,9 +15,16 @@ const wallPostersLoop = Array.from({ length: WALL_COPIES }).flatMap(() => wallPo
 
 const mobileHeroMovies = movies.slice(0, 5)
 
+const statusFilters = [
+  { id: 'all', label: 'All' },
+  { id: 'now-showing', label: 'Now Showing' },
+  { id: 'coming-soon', label: 'Coming Soon' },
+]
+
 export default function Movies() {
   const [query, setQuery] = useState('')
   const [activeGenre, setActiveGenre] = useState('All')
+  const [activeStatus, setActiveStatus] = useState('all')
   const [mobileHeroIndex, setMobileHeroIndex] = useState(0)
 
   useEffect(() => {
@@ -30,14 +37,16 @@ export default function Movies() {
   const filtered = useMemo(() => {
     return movies.filter((movie) => {
       const matchesGenre = activeGenre === 'All' || movie.genres.includes(activeGenre)
+      const matchesStatus = activeStatus === 'all' || movie.status === activeStatus
       const matchesQuery = movie.title.toLowerCase().includes(query.trim().toLowerCase())
-      return matchesGenre && matchesQuery
+      return matchesGenre && matchesStatus && matchesQuery
     })
-  }, [query, activeGenre])
+  }, [query, activeGenre, activeStatus])
 
   const clearFilters = () => {
     setQuery('')
     setActiveGenre('All')
+    setActiveStatus('all')
   }
 
   return (
@@ -121,6 +130,24 @@ export default function Movies() {
       </section>
 
       <div className="mx-auto max-w-6xl px-5 pt-8 pb-16 flex flex-col gap-8">
+        <div className="flex w-fit gap-1 rounded-full border border-border/40 bg-surface p-1">
+          {statusFilters.map(({ id, label }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setActiveStatus(id)}
+              aria-pressed={activeStatus === id}
+              className={`rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition-colors duration-200 cursor-pointer min-h-9 ${
+                activeStatus === id
+                  ? 'bg-accent-strong text-background'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,7 +169,7 @@ export default function Movies() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search movies..."
-              className="w-full rounded-full border border-border/50 bg-background py-2.5 pl-10 pr-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent outline-none transition-colors"
+              className="w-full rounded-full border border-border/50 bg-background py-2.5 pl-10 pr-9 text-sm text-foreground placeholder:text-muted-foreground focus:border-accent-strong focus:ring-2 focus:ring-accent-strong/20 outline-none transition-colors"
             />
             {query && (
               <button
@@ -165,7 +192,7 @@ export default function Movies() {
                 aria-pressed={activeGenre === genre}
                 className={`rounded-full px-4 py-2 text-xs font-medium tracking-wide transition-all duration-200 cursor-pointer min-h-9 ${
                   activeGenre === genre
-                    ? 'bg-accent text-background glow-ring'
+                    ? 'bg-accent-strong text-background glow-ring'
                     : 'bg-surface text-muted-foreground border border-border/40 hover:border-accent/40 hover:text-foreground'
                 }`}
               >
@@ -180,7 +207,7 @@ export default function Movies() {
             {filtered.length} {filtered.length === 1 ? 'title' : 'titles'}
             {activeGenre !== 'All' && <> in <span className="text-foreground">{activeGenre}</span></>}
           </span>
-          {(query || activeGenre !== 'All') && (
+          {(query || activeGenre !== 'All' || activeStatus !== 'all') && (
             <button
               type="button"
               onClick={clearFilters}

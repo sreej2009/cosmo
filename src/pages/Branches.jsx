@@ -166,7 +166,9 @@ export default function Branches() {
               >
                 <Link
                   to={`/branches/${branch.id}`}
-                  className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border/30 bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 hover:shadow-[0_20px_45px_-12px_rgba(204,154,46,0.35)]"
+                  className={`group relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-accent-strong/50 hover:bg-surface-raised hover:shadow-[0_22px_50px_-16px_rgba(214,169,40,0.3)] ${
+                    branch.badge === 'Flagship' ? 'border-accent/25' : 'border-border/30'
+                  }`}
                 >
                   <span
                     aria-hidden="true"
@@ -176,7 +178,7 @@ export default function Branches() {
                   </span>
 
                   <div className="relative flex items-start justify-between gap-3">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-primary text-accent-light ring-1 ring-accent/25 transition-transform duration-300 group-hover:scale-110">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent/20 to-primary text-accent-light ring-1 ring-accent/25 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_18px_-2px_rgba(242,201,76,0.5)]">
                       <MapPin size={22} aria-hidden="true" />
                     </span>
                     {branch.badge && (
@@ -188,7 +190,7 @@ export default function Branches() {
 
                   <div className="relative flex flex-col gap-1.5">
                     <h3 className="font-display text-2xl text-foreground">{branch.name}</h3>
-                    <span className="h-px w-8 bg-accent/50 transition-all duration-300 group-hover:w-14 group-hover:bg-accent" aria-hidden="true" />
+                    <span className="h-px w-8 bg-accent/50 transition-all duration-300 group-hover:w-14 group-hover:bg-accent-strong" aria-hidden="true" />
                     <p className="text-sm text-muted-foreground">{branch.address}</p>
                   </div>
 
@@ -214,8 +216,8 @@ export default function Branches() {
                       <Clapperboard size={14} aria-hidden="true" />
                       {movieCount} {movieCount === 1 ? 'movie' : 'movies'} showing
                     </span>
-                    <span className="flex items-center gap-1 font-medium text-accent-light transition-transform duration-300 group-hover:translate-x-1">
-                      View <ArrowRight size={14} aria-hidden="true" />
+                    <span className="flex items-center gap-1 font-medium text-muted-foreground opacity-70 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-light group-hover:opacity-100">
+                      View Showtimes <ArrowRight size={14} aria-hidden="true" />
                     </span>
                   </div>
                 </Link>

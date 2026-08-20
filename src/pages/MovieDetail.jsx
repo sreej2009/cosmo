@@ -1,11 +1,14 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Clock, Star, Languages, X, ArrowRight } from 'lucide-react'
+import { Play, Clock, Star, Languages, X, ArrowRight, Ticket } from 'lucide-react'
 import Button from '../components/Button.jsx'
 import MoviePoster from '../components/MoviePoster.jsx'
+import MovieCard from '../components/MovieCard.jsx'
+import MovieRow from '../components/MovieRow.jsx'
+import SectionHeading from '../components/SectionHeading.jsx'
 import Avatar from '../components/Avatar.jsx'
-import { getMovieById } from '../data/movies.js'
+import { getMovieById, movies } from '../data/movies.js'
 
 export default function MovieDetail() {
   const { id } = useParams()
@@ -14,6 +17,7 @@ export default function MovieDetail() {
   const [trailerOpen, setTrailerOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(null)
   const [selectedShowtime, setSelectedShowtime] = useState(null)
+  const showtimesRef = useRef(null)
 
   const dates = useMemo(() => {
     if (!movie) return []
@@ -26,6 +30,13 @@ export default function MovieDetail() {
     if (!movie || !activeDate) return []
     return movie.showtimes.filter((s) => s.date === activeDate)
   }, [movie, activeDate])
+
+  const related = useMemo(() => {
+    if (!movie) return []
+    return movies
+      .filter((m) => m.id !== movie.id && m.genres.some((g) => movie.genres.includes(g)))
+      .slice(0, 8)
+  }, [movie])
 
   if (!movie) {
     return (
@@ -43,23 +54,35 @@ export default function MovieDetail() {
     navigate(`/booking/${movie.id}`, { state: { showtime: selectedShowtime } })
   }
 
+  const scrollToShowtimes = () => {
+    showtimesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div>
-      <section className="relative h-[50vh] min-h-96 overflow-hidden border-b border-border/30">
+      <section className="relative h-[60vh] min-h-[26rem] overflow-hidden border-b border-border/30">
         <MoviePoster movie={movie} aspect="backdrop" fill />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
-        <div className="relative mx-auto flex h-full max-w-6xl items-end gap-6 px-5 pb-10">
-          <div className="hidden sm:block h-48 w-32 rounded-xl overflow-hidden shadow-2xl glow-ring">
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_100%,rgba(0,0,0,0.55),transparent_70%)]" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="relative mx-auto flex h-full max-w-6xl items-end gap-6 px-5 pb-10"
+        >
+          <div className="hidden shrink-0 sm:block h-52 w-36 overflow-hidden rounded-lg border border-border/40 shadow-[0_25px_50px_-15px_rgba(0,0,0,0.7)]">
             <MoviePoster movie={movie} aspect="poster" className="h-full w-full" />
           </div>
           <div className="flex flex-col gap-3">
-            <span className="text-xs uppercase tracking-[0.2em] text-accent-light">
+            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-light">
               {movie.genres.join(' · ')}
             </span>
-            <h1 className="text-4xl md:text-5xl text-foreground text-glow">{movie.title}</h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <h1 className="max-w-2xl text-4xl text-foreground text-glow md:text-5xl">{movie.title}</h1>
+            <div className="flex flex-wrap items-center gap-4 text-sm text-foreground-secondary">
               <span className="flex items-center gap-1.5">
-                <Star size={14} className="text-accent-light fill-accent-light" aria-hidden="true" />
+                <Star size={14} className="fill-accent-light text-accent-light" aria-hidden="true" />
                 {movie.imdb} / 10
               </span>
               <span className="flex items-center gap-1.5">
@@ -70,37 +93,43 @@ export default function MovieDetail() {
                 <Languages size={14} aria-hidden="true" />
                 {movie.language}
               </span>
-              <span className="rounded border border-border/50 px-1.5 py-0.5 text-xs">
-                {movie.rating}
-              </span>
+              <span className="rounded border border-border/60 px-1.5 py-0.5 text-xs">{movie.rating}</span>
             </div>
-            <Button variant="secondary" onClick={() => setTrailerOpen(true)} className="w-fit">
-              <Play size={16} aria-hidden="true" /> Watch Trailer
-            </Button>
+            <p className="hidden max-w-xl text-sm leading-relaxed text-muted-foreground sm:block line-clamp-2">
+              {movie.synopsis}
+            </p>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <Button variant="primary" onClick={() => setTrailerOpen(true)}>
+                <Play size={16} fill="currentColor" aria-hidden="true" /> Watch Trailer
+              </Button>
+              <Button variant="secondary" onClick={scrollToShowtimes}>
+                <Ticket size={16} aria-hidden="true" /> Book Tickets
+              </Button>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-14 grid gap-12 lg:grid-cols-3">
-        <div className="lg:col-span-2 flex flex-col gap-8">
+        <div className="lg:col-span-2 flex flex-col gap-10">
           <div>
-            <h2 className="text-2xl text-foreground mb-3">Synopsis</h2>
-            <p className="text-muted-foreground leading-relaxed">{movie.synopsis}</p>
+            <h2 className="mb-3 text-xl text-foreground">Synopsis</h2>
+            <p className="leading-relaxed text-muted-foreground">{movie.synopsis}</p>
           </div>
           <div>
-            <h2 className="text-2xl text-foreground mb-4">Cast</h2>
+            <h2 className="mb-4 text-xl text-foreground">Cast</h2>
             <div className="flex flex-wrap gap-5">
               {movie.cast.map((name) => (
-                <div key={name} className="flex flex-col items-center gap-2 w-20 text-center">
+                <div key={name} className="flex w-20 flex-col items-center gap-2 text-center">
                   <Avatar name={name} size={56} />
-                  <span className="text-xs text-muted-foreground leading-tight">{name}</span>
+                  <span className="text-xs leading-tight text-muted-foreground">{name}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border/30 bg-surface p-6 flex flex-col gap-5 h-fit">
+        <div ref={showtimesRef} className="h-fit scroll-mt-24 rounded-2xl border border-border/30 bg-surface p-6 flex flex-col gap-5">
           <h2 className="text-xl text-foreground">Showtimes</h2>
 
           {dates.length === 0 ? (
@@ -121,7 +150,7 @@ export default function MovieDetail() {
                     aria-pressed={activeDate === date}
                     className={`rounded-lg px-3 py-2 text-xs font-medium min-h-9 cursor-pointer transition-colors ${
                       activeDate === date
-                        ? 'bg-accent text-background'
+                        ? 'bg-accent-strong text-background'
                         : 'bg-muted text-muted-foreground hover:text-foreground'
                     }`}
                   >
@@ -144,7 +173,7 @@ export default function MovieDetail() {
                       aria-pressed={isSelected}
                       className={`flex items-center justify-between rounded-lg border px-3.5 py-2.5 text-sm cursor-pointer transition-colors min-h-11 ${
                         isSelected
-                          ? 'border-accent bg-primary text-accent-light'
+                          ? 'border-accent-strong bg-accent-strong/10 text-accent-light'
                           : 'border-border/40 text-muted-foreground hover:border-accent/50 hover:text-foreground'
                       }`}
                     >
@@ -159,16 +188,27 @@ export default function MovieDetail() {
               </div>
 
               <Button variant="primary" disabled={!selectedShowtime} onClick={goToBooking}>
-                Select Seats <ArrowRight size={16} ari0-hidden="true" />
+                Select Seats <ArrowRight size={16} aria-hidden="true" />
               </Button>
             </>
           )}
         </div>
       </section>
 
+      {related.length > 0 && (
+        <section className="border-t border-border/30 bg-surface/50">
+          <div className="mx-auto max-w-6xl px-5 py-14 flex flex-col gap-6">
+            <SectionHeading eyebrow="You Might Also Like" title="Related Movies" />
+            <MovieRow>
+              {related.map((m, i) => (
+                <MovieCard key={m.id} movie={m} index={i} />
+              ))}
+            </MovieRow>
+          </div>
+        </section>
+      )}
 
-
-      <AnimatePresence> 
+      <AnimatePresence>
         {trailerOpen && (
           <motion.div
             role="dialog"
@@ -229,5 +269,5 @@ export default function MovieDetail() {
         )}
       </AnimatePresence>
     </div>
-  ) 
+  )
 }
