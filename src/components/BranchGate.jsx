@@ -1,27 +1,39 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { MapPin, X } from 'lucide-react'
 import StarfieldBackground from './StarfieldBackground.jsx'
+import TheatreCurtain from './TheatreCurtain.jsx'
 import { branches } from '../data/branches.js'
 import cosmoLogo from '../assets/COSMO LOGO.png'
 
 const EASE = [0.65, 0, 0.35, 1]
 
-// Timeline (seconds): 0–0.5 black hold, 0.5–1.4 logo appears,
-// 1.4–1.9 logo holds, 1.9–3.0 logo travels to header position.
-const LOGO_TIMES = [0, 0.5 / 3, 1.4 / 3, 1.9 / 3, 1]
-const LOGO_DURATION = 3
+// Unified theatre-opening timeline (seconds, all relative to mount):
+// 0.0–0.6   theatre blackout
+// 0.6–1.8   curtain opens / stage reveal
+// 1.2–2.1   Cosmos logo reveals in the center
+// 2.1–2.7   logo holds under the spotlight
+// 2.7–3.7   the SAME logo travels up into its header position
+// 3.0–3.8   BranchGate background reveals
+// 3.5–4.1   heading + subtitle reveal
+// 3.9–4.7   branch cards stagger in
+// 4.7–5.0   skip + close settle
+const CURTAIN_DELAY = 0.6
+const CURTAIN_DURATION = 1.2
 
-const BG_DELAY = 2
-const BG_DURATION = 1
+const LOGO_TIMES = [0, 1.2 / 3.7, 2.1 / 3.7, 2.7 / 3.7, 1]
+const LOGO_DURATION = 3.7
 
-const HEADER_ICON_DELAY = 2.8
-const HEADER_TITLE_DELAY = 2.9
-const HEADER_SUBTITLE_DELAY = 3.0
+const BG_DELAY = 3.0
+const BG_DURATION = 0.8
 
-const CARDS_START = 3.3
+const HEADER_ICON_DELAY = 3.5
+const HEADER_TITLE_DELAY = 3.6
+const HEADER_SUBTITLE_DELAY = 3.7
+
+const CARDS_START = 3.9
 const CARD_STAGGER = 0.12
 
-const CHROME_DELAY = 4.2
+const CHROME_DELAY = 4.7
 
 export default function BranchGate({ onDone }) {
   const prefersReducedMotion = useReducedMotion()
@@ -52,6 +64,24 @@ export default function BranchGate({ onDone }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
     >
+      {/* theatre atmosphere: warm ambient wash, vignette, and film grain — present from the first frame */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_45%,rgba(214,169,40,0.09),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_65%_65%_at_50%_50%,transparent_45%,rgba(0,0,0,0.65)_100%)]" />
+      {!prefersReducedMotion && (
+        <svg className="absolute h-0 w-0" aria-hidden="true">
+          <filter id="theatre-grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="noise" />
+            <feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 0.9  0 0 0 0 0.7  0 0 0 0.045 0" />
+          </filter>
+        </svg>
+      )}
+      {!prefersReducedMotion && (
+        <div className="pointer-events-none absolute inset-0 opacity-70" style={{ filter: 'url(#theatre-grain)' }} />
+      )}
+
+      {/* stage curtain: frames the opening, then slides away to reveal the theatre */}
+      {!prefersReducedMotion && <TheatreCurtain openDelay={CURTAIN_DELAY} openDuration={CURTAIN_DURATION} />}
+
       {/* background reveal: existing starfield + ambient glow, hidden until the logo settles */}
       <motion.div
         className="absolute inset-0"
@@ -63,12 +93,12 @@ export default function BranchGate({ onDone }) {
         <div className="pointer-events-none absolute left-1/2 top-0 h-[28rem] w-[36rem] -translate-x-1/2 -translate-y-1/3 rounded-full bg-accent/10 blur-3xl" />
       </motion.div>
 
-      {/* soft glow behind the logo during its center reveal, fades as it settles into the header */}
+      {/* cinema spotlight behind the logo: builds through the hold, then diffuses as the logo departs */}
       {!prefersReducedMotion && (
         <motion.div
           className="pointer-events-none fixed left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-light/25 blur-3xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0, 0.55, 0.55, 0] }}
+          initial={{ opacity: 0, scale: 1 }}
+          animate={{ opacity: [0, 0, 0.5, 0.35, 0], scale: [1, 1, 1, 1.25, 1.4] }}
           transition={{ duration: LOGO_DURATION, times: LOGO_TIMES, ease: EASE }}
         />
       )}
@@ -80,7 +110,7 @@ export default function BranchGate({ onDone }) {
         initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.4, delay: CHROME_DELAY, ease: 'easeOut' }}
-        className="fixed right-5 top-5 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border/40 bg-surface text-muted-foreground transition-colors hover:border-accent/60 hover:text-foreground cursor-pointer"
+        className="fixed right-5 top-5 z-40 flex h-10 w-10 items-center justify-center rounded-full border border-border/40 bg-surface text-muted-foreground transition-colors hover:border-accent/60 hover:text-foreground cursor-pointer"
       >
         <X size={18} aria-hidden="true" />
       </motion.button>
@@ -89,7 +119,7 @@ export default function BranchGate({ onDone }) {
       <motion.img
         src={cosmoLogo}
         alt="Cosmos Cinemas"
-        className="pointer-events-none fixed left-1/2 top-6 z-20 w-28 -translate-x-1/2 drop-shadow-[0_0_18px_rgba(240,193,75,0.3)]"
+        className="pointer-events-none fixed left-1/2 top-6 z-40 w-28 -translate-x-1/2 drop-shadow-[0_0_18px_rgba(240,193,75,0.3)]"
         initial={
           prefersReducedMotion
             ? { opacity: 1, y: '0vh', scale: 1, filter: 'blur(0px)' }
