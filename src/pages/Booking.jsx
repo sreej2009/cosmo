@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
-import { useParams, useLocation, Link } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Check, ArrowRight, ArrowLeft, Ticket } from 'lucide-react'
+import { Check, ArrowRight, ArrowLeft, Ticket, Film, CalendarX } from 'lucide-react'
 import Button from '../components/Button.jsx'
 import SeatMap from '../components/SeatMap.jsx'
+import EmptyState from '../components/EmptyState.jsx'
 import { getMovieById } from '../data/movies.js'
 
 function BookingSummary({ movie, showtime, selectedSeats, total, onContinue, onBack }) {
@@ -88,24 +89,25 @@ export default function Booking() {
 
   if (!movie) {
     return (
-      <div className="mx-auto max-w-2xl px-5 pt-24 pb-24 text-center">
-        <h1 className="text-3xl text-foreground mb-4">Movie not found</h1>
-        <Link to="/movies" className="text-accent-light hover:underline">
-          Back to all movies
-        </Link>
-      </div>
+      <EmptyState
+        icon={Film}
+        title="Movie not found"
+        message="This title may have been removed or the link is incorrect."
+        actionLabel="Back to all movies"
+        actionTo="/movies"
+      />
     )
   }
 
   if (movie.showtimes.length === 0) {
     return (
-      <div className="mx-auto max-w-2xl px-5 pt-24 pb-24 text-center">
-        <h1 className="text-3xl text-foreground mb-4">{movie.title} isn't bookable yet</h1>
-        <p className="text-muted-foreground mb-6">Showtimes will open closer to release.</p>
-        <Link to="/movies" className="text-accent-light hover:underline">
-          Browse other movies
-        </Link>
-      </div>
+      <EmptyState
+        icon={CalendarX}
+        title={`${movie.title} isn't bookable yet`}
+        message="Showtimes will open closer to release. Check back soon."
+        actionLabel="Browse other movies"
+        actionTo="/movies"
+      />
     )
   }
 

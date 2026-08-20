@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { MapPin, ArrowLeft, ArrowRight, Armchair } from 'lucide-react'
+import { MapPin, ArrowLeft, ArrowRight, Armchair, CalendarX } from 'lucide-react'
 import MoviePoster from '../components/MoviePoster.jsx'
+import EmptyState from '../components/EmptyState.jsx'
 import { getBranchById } from '../data/branches.js'
 import { moviesAtBranch, showtimesForBranch } from '../data/movies.js'
 
@@ -75,12 +76,13 @@ export default function BranchDetail() {
 
   if (!branch) {
     return (
-      <div className="mx-auto max-w-2xl px-5 pt-24 pb-24 text-center">
-        <h1 className="text-3xl text-foreground mb-4">Branch not found</h1>
-        <Link to="/branches" className="text-accent-light hover:underline">
-          Back to all branches
-        </Link>
-      </div>
+      <EmptyState
+        icon={MapPin}
+        title="Branch not found"
+        message="This branch may have closed or the link is incorrect."
+        actionLabel="Back to all branches"
+        actionTo="/branches"
+      />
     )
   }
 
@@ -122,8 +124,9 @@ export default function BranchDetail() {
       </div>
 
       {movies.length === 0 ? (
-        <div className="rounded-2xl border border-border/30 bg-surface py-16 text-center text-muted-foreground">
-          No showtimes scheduled at this branch right now.
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-border/30 bg-surface py-16 text-center text-muted-foreground">
+          <CalendarX size={28} className="text-accent-light" aria-hidden="true" />
+          <p>No showtimes scheduled at this branch right now.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-5">

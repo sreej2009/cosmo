@@ -1,13 +1,14 @@
 import { useMemo, useRef, useState } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, Clock, Star, Languages, X, ArrowRight, Ticket } from 'lucide-react'
+import { Play, Clock, Star, Languages, X, ArrowRight, Ticket, Film } from 'lucide-react'
 import Button from '../components/Button.jsx'
 import MoviePoster from '../components/MoviePoster.jsx'
 import MovieCard from '../components/MovieCard.jsx'
 import MovieRow from '../components/MovieRow.jsx'
 import SectionHeading from '../components/SectionHeading.jsx'
 import Avatar from '../components/Avatar.jsx'
+import EmptyState from '../components/EmptyState.jsx'
 import { getMovieById, movies } from '../data/movies.js'
 
 export default function MovieDetail() {
@@ -40,12 +41,13 @@ export default function MovieDetail() {
 
   if (!movie) {
     return (
-      <div className="mx-auto max-w-2xl px-5 pt-24 pb-24 text-center">
-        <h1 className="text-3xl text-foreground mb-4">Movie not found</h1>
-        <Link to="/movies" className="text-accent-light hover:underline">
-          Back to all movies
-        </Link>
-      </div>
+      <EmptyState
+        icon={Film}
+        title="Movie not found"
+        message="This title may have been removed or the link is incorrect."
+        actionLabel="Back to all movies"
+        actionTo="/movies"
+      />
     )
   }
 
